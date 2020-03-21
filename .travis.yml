@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t saschascata/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true saschascata/react-test npm test
+
+after_success:
+  - docker build -t saschascata/multi-client ./client
+  - docker build -t saschascata/multi-nginx ./nginx
+  - docker build -t saschascata/multi-server ./server
+  - docker build -t saschascata/multi-worker ./worker
+  #Login into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push to dockerhub
+  - docker push saschascata/multi-client
+  - docker push saschascata/multi-nginx
+  - docker push saschascata/multi-server
+  - docker push saschascata/multi-worker
