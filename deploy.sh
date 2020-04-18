@@ -11,6 +11,6 @@ docker push saschascata/multi-server:$SHA
 docker push saschascata/multi-worker:$SHA
 
 kubectl apply -f k8s
-kubectl set image deployments/server-deployment server=saschascata/multi-server:docker push saschascata/multi-server:$SHA
-kubectl set image deployments/client-deployment client=saschascata/multi-client:docker push saschascata/multi-client:$SHA
-kubectl set image deployments/worker-deployment worker=saschascata/multi-worker:docker push saschascata/multi-worker:$SHA
+kubectl set image deployments/server-deployment server=saschascata/multi-server:$SHA
+kubectl set image deployments/client-deployment client=saschascata/multi-client:$SHA
+kubectl set image deployments/worker-deployment worker=saschascata/multi-worker:$SHA
